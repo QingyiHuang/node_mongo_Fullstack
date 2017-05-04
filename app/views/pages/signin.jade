@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+  .container
+    .row
+      form(method="POST",action="/user/signin")
+        .modal-header 登录
+        .modal-body
+          .form-group
+            //-文字和控件绑定的label标签
+            label(for="signinName") 用户名
+            input(id="signinName" class="form-control" name="user[name]" type="text")
+          .form-group
+            label(for="signinPassword") 密码
+            input(id="signinPassword" class="form-control" name="user[password]" type="password")
+        .modal-footer
+          button(class="btn btn-default" type="button",data-dismiss="modal") 关闭
+          button(class="btn btn-success",type="submit") 登录
