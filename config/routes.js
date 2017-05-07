@@ -1,6 +1,7 @@
 var Index = require('../app/controllers/index.js')
 var User = require('../app/controllers/user.js')
 var Passage = require('../app/controllers/passage.js')
+var Comment = require('../app/controllers/comment.js')
 
 module.exports = function(app){
 	//登录信息处理
@@ -30,4 +31,7 @@ module.exports = function(app){
 	app.post('/admin/passage',User.signinRequired,User.adminRequired,Passage.save)//adminpost---拿到后台录入页post过来的数据
 	app.get('/admin/passage/list',User.signinRequired,User.adminRequired,Passage.list)
 	app.delete('/admin/passage/list',User.signinRequired,User.adminRequired,Passage.del);
+
+	//评论
+	app.post('/user/comment',User.signinRequired,Comment.save)
 }
