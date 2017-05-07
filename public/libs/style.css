@@ -1,0 +1,16 @@
+.tip{
+	color: #f00;
+	display: none;
+	float: right;
+}
+.zhuce{
+	float: right;
+	margin-right: 380px;
+}
+.zhuce a{
+	text-decoration: none;
+	color: #337ab7;
+}
+.zhuce a:hover{
+	color: blue;
+}
