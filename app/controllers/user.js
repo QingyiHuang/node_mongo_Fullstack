@@ -48,6 +48,7 @@ exports.signin = function(req,res){
 			console.log(err)
 		}
 		if(!user){
+			return ('用户名或者密码错误')
 			return res.redirect('/signup')
 		}
 //这个密码对比逻辑我们在schema里面

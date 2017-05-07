@@ -1,14 +1,18 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var ObjectId = Schema.types.ObjectId//获取mongoose.Schema的主键
+var ObjectId = Schema.Types.ObjectId//获取mongoose.Schema的主键
 
 //设计评论模型
 //评论人，评论时间，评论内容 ，对哪块内容进行的评论
-var commentSchema = new mongoose.Schema({
-	//引用,存入passageid通过ref找到关联的模型
+var commentSchema = new Schema({
+	//引用,存入passageid通过ref找到关联的模型(Populate方法)
 	passage:{type:ObjectId,ref:'passage'},
 	from:{type:ObjectId,ref:'user'},//评论来自
-	to:{type:ObjectId,ref:'user'},//评论给
+	reply:[{//互相回复就是多对多用数组，对当前评论下的各种小评论(回复给谁，谁回复的)
+		from:{type:ObjectId,ref:'user'},
+		to:{type:ObjectId,ref:'user'},//评论给
+		content:String
+	}],
 	content:String,//评论类容
 	// meta 更新或录入数据的时间记录
 	meta:{

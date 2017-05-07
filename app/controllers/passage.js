@@ -1,4 +1,5 @@
 var passage = require('../models/passage.js')
+var Comment = require('../models/comment.js')
 var _underscore = require('underscore')
 
 	//detail page
@@ -7,11 +8,22 @@ exports.detail = function (req,res) {
 	var id = req.params.id
 	//通过这个id来查询，这个方法在schema里面已经定义好
 	passage.findById(id,function(err,passage){
-		res.render('detail',{
-			title:passage.title,
-			passage:passage
-		});
-	});
+		//与视频相关的评论也拿到
+		Comment
+			//找到评论文章
+			.find({passage:id})
+			//populate拿到关联的user name
+			.populate('from','name')
+			.populate('reply.from reply.to','name')
+			.exec(function(err,comments){
+				console.log(comments)
+				res.render('detail',{
+					title:passage.title,
+					passage:passage,
+					comments:comments
+				})
+			})
+	})
 }
 
 	//admin page 后台录入页面

@@ -1,16 +1,20 @@
 nav(class="navbar navbar-inverse navbar-static-top" role="navigation")
   div(class="container")
     div(class="navbar-header")
-      a.navbar-brand(href="/") 慕课网
+      a.navbar-brand(href="/") 慕课网LOGO
     //-子元素右对齐
     div
       ul(class="nav navbar-nav")
+        li
+          a(href='/') 首页
+            span(class="glyphicon glyphicon-home")
         li
           a(href="/admin/passage/list") 后台管理页面
         li
           a(href="/admin/passage/new") 后台录入页
         li
           a(href="/admin/user/list") 用户列表页面
+    
     if(user)
       p.navbar-text.navbar-right
         //-不弹窗的登录页面 modal模态框
@@ -26,6 +30,12 @@ nav(class="navbar navbar-inverse navbar-static-top" role="navigation")
         a.navbar-link(href='#',data-toggle="modal",data-target="#signupModal") 注册
         span &nbsp;|&nbsp;
         a.navbar-link(href='#',data-toggle="modal",data-target="#signinModal") 登录
+    form(class="navbar-form navbar-right" )
+      div(class="input-group")
+        input(type="text" name="" class="form-control" placeholder="搜索你的课程")
+        span(class="input-group-btn")
+          button(class="btn btn-danger")
+            span(class="glyphicon glyphicon-search")
 //-制作模态窗口 for signup
 #signupModal.modal.fade
   .modal-dialog
