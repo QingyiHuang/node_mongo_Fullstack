@@ -2,6 +2,7 @@ var Index = require('../app/controllers/index.js')
 var User = require('../app/controllers/user.js')
 var Passage = require('../app/controllers/passage.js')
 var Comment = require('../app/controllers/comment.js')
+var Category = require('../app/controllers/category.js')
 
 module.exports = function(app){
 	//登录信息处理
@@ -23,6 +24,7 @@ module.exports = function(app){
 	app.get('/signup',User.showSignup)
 	app.get('/user/logout',User.logout)
 	app.get('/admin/user/list',User.signinRequired,User.adminRequired,User.list)//要访问userlist要先验证登陆然后要验证权限
+	app.delete('/admin/user/list',User.signinRequired,User.adminRequired,User.userDel);
 
 	//内容主题路由
 	app.get('/passage/:id',Passage.detail)
@@ -34,4 +36,9 @@ module.exports = function(app){
 
 	//评论
 	app.post('/user/comment',User.signinRequired,Comment.save)
+
+	//分类路由
+	app.get('/admin/category/new', User.signinRequired, User.adminRequired, Category.new)
+	app.post('/admin/category', User.signinRequired, User.adminRequired, Category.save)
+	app.get('/admin/category/list', User.signinRequired, User.adminRequired, Category.list)
 }
