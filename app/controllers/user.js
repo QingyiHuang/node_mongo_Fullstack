@@ -107,4 +107,16 @@ exports.adminRequired = function(req,res,next){
 	}
 	next()
 }
-
+//user del
+exports.userDel = function (req, res) {
+	   var id = req.query.id;//拿到请求id
+	   if (id) {//存在
+	       user.remove({_id: id}, function (err, user) {
+	           if (err) {
+	               res.json({success: 0});
+	           } else {
+	               res.json({success: 1});
+	           }
+	       });
+	   }
+}

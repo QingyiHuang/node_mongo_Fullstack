@@ -1,7 +1,9 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');//专门为密码hash做的算法
 var SALT_WORK_FACTOR = 10;
-var UserSchema = new mongoose.Schema({//mongoose对象，
+var Schema = mongoose.Schema;
+
+var UserSchema = new Schema({//mongoose对象，
 	//通过mongoose.Schema这个对象接口，在对象里面描述模型的文档结构
 	//以及数据类型
 	//生成的模式复制给userschema

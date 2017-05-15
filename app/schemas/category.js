@@ -1,19 +1,10 @@
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var ObjectId = Schema.Types.ObjectId;
-
-var passageSchema = new Schema({
-	title : String,
-	editor : String,
-	summary : String,
-	time : Number,
-	file : String,
-	poster : String,
-	flash : String,
-	category :{
-		type:ObjectId,
-		ref:'Category'
-	},
+var Schema = mongoose.Schema
+var ObjectId = Schema.Types.ObjectId
+//做分类功能
+var CategorySchema = new Schema({
+	name : String,
+	passages :[{type:ObjectId,ref:'passage'}],
 	// meta 更新或录入数据的时间记录
 	meta:{
 		createAt:{
@@ -28,7 +19,7 @@ var passageSchema = new Schema({
 });
 
 //表示每次存储数据之前都先调用这个方法
-passageSchema.pre('save',function(next){
+CategorySchema.pre('save',function(next){
 	//判断如果是新添加的
 	if(this.isNew){
 		//创建时间为当前时间
@@ -42,7 +33,7 @@ passageSchema.pre('save',function(next){
 })
 
 //静态方法，数据库经过模型编译后这方法才能使用
-passageSchema.statics = {
+CategorySchema.statics = {
 	//fetch方法，取出数据库中所有数据
 	fetch:function(cb) {
 		return this
@@ -60,4 +51,4 @@ passageSchema.statics = {
 	}
 }
 
-module.exports = passageSchema
+module.exports = CategorySchema

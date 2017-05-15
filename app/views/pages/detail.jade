@@ -4,7 +4,7 @@ block content
   .container
     .row
       .col-md-7
-        embed(src="#{passage.flash}" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="opaque" width="480" height="400")
+        embed(src="#{passage.flash}" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="opaque" width="670" height="500")
       .col-md-5
         dl.dl-horizontal
           dt 项目
@@ -14,9 +14,9 @@ block content
           dt 简介
           dd= passage.summary
           dt 时间
-          dd= passage.time
+          dd= moment(passage.meta.updateAt).format('MM/DD/YYYY')
           dt 分类
-          dd= passage.file
+          dd= passage.category
   .container
     .row
       .col-md-7
@@ -28,12 +28,12 @@ block content
               each item in comments
                 li.media
                   .pull-left
-                    a.comment(href="#comments", data-cid="#{item._id}", data-tid="#{item.from._id}")
+                    a.comment(class="replyComment" href="#comments", data-cid="#{item._id}", data-tid="#{item.from._id}")
                       img.media-object(src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjZWVlIi8+PHRleHQgdGV4dC1hbmNob3I9Im1pZGRsZSIgeD0iMzIiIHk9IjMyIiBzdHlsZT0iZmlsbDojYWFhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjEycHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+NjR4NjQ8L3RleHQ+PC9zdmc+", style="width: 64px; height: 64px;")
                   .media-body
                     h4.media-heading #{item.from.name}
                     p #{item.content}
-                    a.comment(href="#comments", data-cid="#{item._id}", data-tid="#{item.from._id}")
+                    a.comment(class="replyComment" href="#comments", data-cid="#{item._id}", data-tid="#{item.from._id}")
                       p(class="pull-right") 回复
                     if item.reply && item.reply.length > 0
                       each reply in item.reply
@@ -44,7 +44,7 @@ block content
                           .media-body
                             h4.media-heading
                               | #{reply.from.name}
-                              small(class="text-danger") &nbsp;回复&nbsp;
+                              small(id="text-danger") &nbsp;回复&nbsp;
                               | #{reply.to.name}:
                             p #{reply.content}
                   hr
@@ -56,7 +56,7 @@ block content
                 .form-group
                   textarea.form-control(name="comment[content]", row="3")
                 if user
-                  button.btn.btn-primary(type='submit') 提交
+                  button.btn.btn-primary(class='replyButton' type='submit') 提交评论
                 else
                   a.navbar-link(href="#", data-toggle="modal", data-target="#signinModal") 登录后评论
   script(src="/static/js/detail.js")

@@ -11,10 +11,13 @@ nav(class="navbar navbar-inverse navbar-static-top" role="navigation")
         li
           a(href="/admin/passage/list") 后台管理页面
         li
-          a(href="/admin/passage/new") 后台录入页
+          a(href="/admin/passage/new") 文章录入页
         li
           a(href="/admin/user/list") 用户列表页面
-    
+        li
+          a(href="/admin/category/new") 分类录入页
+        li
+          a(href="/admin/category/list") 分类管理页
     if(user)
       p.navbar-text.navbar-right
         //-不弹窗的登录页面 modal模态框

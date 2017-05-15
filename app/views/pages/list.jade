@@ -23,9 +23,9 @@ block content
               td #{item.summary}
               //moment引入就是管理时间的模块
               td #{moment(item.meta.updateAt).format('MM/DD/YYYY')}
-              td #{item.file}
+              td #{item.category.name}
               td: a(target="_blank",href="/passage/#{item._id}") 查看
               td: a(target="_blank",href="/admin/passage/update/#{item._id}") 修改
               td
-                button.button.btn.btn-danger.del(type="button",data-id="#{item._id}") 删除
+                button.button.btn.btn-danger.delPassage(type="button",data-id="#{item._id}") 删除
   script(src="/static/js/admin.js")

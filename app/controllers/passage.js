@@ -1,6 +1,8 @@
 var passage = require('../models/passage.js')
 var Comment = require('../models/comment.js')
+var Category = require('../models/category.js')
 var _underscore = require('underscore')
+var path = require('path')
 
 	//detail page
 exports.detail = function (req,res) {
@@ -26,96 +28,114 @@ exports.detail = function (req,res) {
 	})
 }
 
-	//admin page 后台录入页面
-exports.new = function (req,res) {
-	res.render('admin',{
-		title:'后台录入页面',
-		passage:{
-			title:'',
-			editor:'',
-			summary:'',
-			time:'',
-			file:'',
-			flash:'',
-			poster:''
-		}
-	})
+	//admin new page 后台录入页面
+exports.new = function(req, res) {
+  Category.find({}, function(err, categories) {
+    res.render('admin', {
+      title: '后台录入页',
+      categories: categories,
+      passage: {}
+    })
+  })
 }
 
 	//admin update 后台更新页面 匹配到：ID
 exports.update = function(req,res){
 	var id = req.params.id;
-	if(id){//如果存在这通过moduls拿到数据传入给admin页面
-		passage.findById(id,function(err,passage){
-			res.render('admin',{
-				title:'后台更新页面',
-				passage:passage
-			})
-		})
-	}
+
+  if(id){
+    passage.findById(id,function(err,passage){
+      Category.find({},function(err,categories){
+        res.render('admin',{
+          title:"后台更新页面",
+          passage:passage,
+          categories:categories
+        })
+      })
+    })
+  }
+	
 }
 
 
 	//adminpost---拿到后台录入页post过来的数据
-exports.save = function(req,res){
-	//拿到_id
-	var id = req.body.passage._id;
-	//拿到对象
-	var passageObj = req.body.passage;
-	var _passage = null;
-	//如果拿到的id与数据库中id匹配 即已经存在
-	if(id !=='undefined'){
-		//进行更新
-		passage.findById(id,function(err,passage){
-			if(err){
-				console.log(err)
-			}
-	 		//用新对象里的字段替换老的字段
-			_passage = _underscore.extend(passage,passageObj);
-			_passage.save(function(err,passage){
-				if(err){
-					console.log(err);
-				}
-				//重定向
-				res.redirect('/passage/'+passage._id);
-			});
-		});
-	}else{ //添加新的数据
-		_passage = new passage({
-			title:passageObj.title,
-			editor:passageObj.editor,
-			summary:passageObj.summary,
-			time:passageObj.time,
-			file:passageObj.file,
-			poster:passageObj.poster,
-			flash:passageObj.flash
-		})
+exports.save = function(req, res) {
+  var id = req.body.passage._id
+  var passageObj = req.body.passage
+  var _passage
 
-		_passage.save(function(err,passage){
-			if(err){
-				console.log(err);
-			}
-			//重定向
-			res.redirect('/passage/'+passage._id);
-		});
-	}
+  if (req.poster) {
+    passageObj.poster = req.poster
+  }
+
+  if (id) {
+    passage.findById(id, function(err, passage) {
+      if (err) {
+        console.log(err)
+      }
+
+      _passage = _underscore.extend(passage, passageObj)
+      _passage.save(function(err, passage) {
+        if (err) {
+          console.log(err)
+        }
+
+        res.redirect('/passage/' + passage._id)
+      })
+    })
+  }
+  else {
+    _passage = new passage(passageObj)
+
+    var categoryId = passageObj.category
+    var categoryName = passageObj.categoryName
+
+    _passage.save(function(err, passage) {
+      if (err) {
+        console.log(err)
+      }
+      if (categoryId) {
+        Category.findById(categoryId, function(err, category) {
+          category.passages.push(passage._id)
+
+          category.save(function(err, category) {
+            res.redirect('/passage/' + passage._id)
+          })
+        })
+      }
+      else if (categoryName) {
+        var category = new Category({
+          name: categoryName,
+          passages: [passage._id]
+        })
+
+        category.save(function(err, category) {
+          passage.category = category._id
+          passage.save(function(err, passage) {
+            res.redirect('/passage/' + passage._id)
+          })
+        })
+      }
+    })
+  }
 }
 
 	//list页面就是将数据库里的数据呈现出来，直接fetch
 
-exports.list = function (req,res) {
+exports.list = function(req, res) {
+  passage.find({})
+    .populate('category', 'name')
+    .exec(function(err, passages) {
+      if (err) {
+        console.log(err)
+      }
 
-	passage.fetch(function(err,passages){
-		if(err){
-			console.log(err)
-		}
-		res.render('list',{
-			title:'列表页',
-			passages:passages
-		})
-	})
+      res.render('list', {
+        title: '列表页',
+        passages: passages
+      })
+    })
 }
-
 	//delete 请求的路由
 exports.del = function (req, res) {
 	   var id = req.query.id;//拿到请求id
