@@ -71,7 +71,7 @@ UserSchema.methods = {
 	comparePassword:function(_password,callback){
 		//用bcrypt自带方法比较//拿res.body.password和数据库里的password
 		bcrypt.compare(_password,this.password,function(err,isMatch){
-			if(err){s
+			if(err){
 				return callback(err)
 			}
 			//没错的话calback(err,isMactch)

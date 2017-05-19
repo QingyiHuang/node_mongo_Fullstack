@@ -1,0 +1,20 @@
+extends ../layout
+
+block content
+  link(href="/static/libs/style.css" rel="stylesheet")
+  .container
+    .row
+      .panel.panel-muted
+        .panel-heading
+          h3 #{category.name}
+        .panel-body
+          if (category.passages&&category.passages.length>0)
+            each item in category.passages
+              div(class="col-md-2")
+                //缩略图
+                div(class="thumbnail div1")
+                  a(href="/passage/#{item._id}")
+                    img(class="img-responsive" src="#{item.poster}" alt="#{item.title}")
+                  .caption
+                    h3 #{item.title}
+                    p: a.btn.btn-danger(href="/passage/#{item._id}",role="button") 进入学习

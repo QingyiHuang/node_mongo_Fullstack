@@ -84,7 +84,7 @@ exports.save = function(req, res) {
       })
     })
   }
-  else {
+  else {//自定义分类和选择分类逻辑处理，有选择已有的就以已有的作为main
     _passage = new passage(passageObj)
 
     var categoryId = passageObj.category
@@ -103,13 +103,13 @@ exports.save = function(req, res) {
           })
         })
       }
-      else if (categoryName) {
+      else if (categoryName) {//如过填了自定义就增加自定义分类
         var category = new Category({
           name: categoryName,
           passages: [passage._id]
         })
 
-        category.save(function(err, category) {
+        category.save(function(err, category) {//分类保存对文章也保存
           passage.category = category._id
           passage.save(function(err, passage) {
             res.redirect('/passage/' + passage._id)
