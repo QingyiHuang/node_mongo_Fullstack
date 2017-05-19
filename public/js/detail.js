@@ -11,6 +11,7 @@ $(function() {
       $('<input>').attr({
         type: 'hidden',
         id: 'toId',
+        class:'replyComment',
         name: 'comment[tid]',
         value: toId
       }).appendTo('#commentForm')
@@ -22,6 +23,7 @@ $(function() {
     else {
       $('<input>').attr({
         type: 'hidden',
+        class:'replyComment',
         id: 'commentId',
         name: 'comment[cid]',
         value: commentId
@@ -37,6 +39,4 @@ $(function() {
       replyButton.innerHTML='提交回复内容';
     }
   }
-
-
 })

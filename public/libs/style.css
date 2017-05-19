@@ -1,16 +1,39 @@
-.tip{
-	color: #f00;
-	display: none;
-	float: right;
+.footer{
+	height:90px;background:#1a1013;overflow: hidden;width:100%; 
 }
-.zhuce{
-	float: right;
-	margin-right: 380px;
+.wraper{
+	width:auto;max-width:1200px;margin-top: 20px;
 }
-.zhuce a{
-	text-decoration: none;
-	color: #337ab7;
+.footer_link{
+	float:left;
+	list-style-type: none;
 }
-.zhuce a:hover{
-	color: blue;
+.r{
+	float:left;
+	padding-left: 30px;
+}
+.beian{
+	vertical-align: bottom;
+	text-align: center;
+}
+.icon_link{
+	width:auto;
+	float:right;
+}
+.icon {
+   width: 1em; height: 1em;
+   vertical-align: -0.15em;
+   fill: currentColor;
+   overflow: hidden;
+}
+.lf{
+	font-size: 44px;
+	padding-left:10px;
+}
+
+.div1 img{
+	transition: all 0.5s;
+}
+.div1:hover img{
+	transform: scale(1.2);
 }
