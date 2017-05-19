@@ -3,6 +3,7 @@ var User = require('../app/controllers/user.js')
 var Passage = require('../app/controllers/passage.js')
 var Comment = require('../app/controllers/comment.js')
 var Category = require('../app/controllers/category.js')
+var AboutUs = require('../app/controllers/aboutus.js')
 
 module.exports = function(app){
 	//登录信息处理
@@ -34,11 +35,17 @@ module.exports = function(app){
 	app.get('/admin/passage/list',User.signinRequired,User.adminRequired,Passage.list)
 	app.delete('/admin/passage/list',User.signinRequired,User.adminRequired,Passage.del);
 
-	//评论
+	//评论和回复路由
 	app.post('/user/comment',User.signinRequired,Comment.save)
 
 	//分类路由
 	app.get('/admin/category/new', User.signinRequired, User.adminRequired, Category.new)
 	app.post('/admin/category', User.signinRequired, User.adminRequired, Category.save)
 	app.get('/admin/category/list', User.signinRequired, User.adminRequired, Category.list)
+
+	//分类详情路由
+	app.get('/results',Index.search)
+
+	//aboutUs请求
+	app.get('/aboutUs',AboutUs.aboutus)
 }
