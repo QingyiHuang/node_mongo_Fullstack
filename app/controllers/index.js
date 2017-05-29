@@ -19,7 +19,7 @@ exports.index = function(req,res){
 }
 
 //详情分类
-exports.search = function(req,res){
+exports.results = function(req,res){
 	var catId = req.query.category
 	Category
 		.find({_id:catId})//分类从数据库get
@@ -35,4 +35,30 @@ exports.search = function(req,res){
 				category:categories[0]
 		})
 	})
+}
+
+//查询
+exports.search = function(req,res){
+  var q = req.query.q
+  var page = parseInt(req.query.p, 10) || 0
+  var count = 2
+  var index = page * count
+
+    passage
+      .find({title: new RegExp(q + '.*', 'i')})
+      .exec(function(err, passages) {
+        if (err) {
+          console.log(err)
+        }
+        var search = passages.slice(index, index + count)
+
+        res.render('search', {
+          title: '查询页面',
+          keyword: q,
+          currentPage: (page + 1),
+          query: 'q=' + q,
+          totalPage: Math.ceil(passages.length / count),
+          passages: search
+        })
+      })
 }
