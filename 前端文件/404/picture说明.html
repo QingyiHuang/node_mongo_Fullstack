@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'>
+	<title>图片说明</title>
+	<script src="bs/js/jquery-3.1.1.js"></script>
+	<style type="text/css">
+		.div1{
+			width: 200px;
+			height: 200px;
+			overflow: hidden;
+			border: 5px solid #000;
+			position: relative;
+		}
+		.div1 img{
+			transition: all 0.5s;
+		}
+		.picp{
+			width: 200px;
+			height: 200px;
+			background: rgba(10,10,10,0.6);
+			position: absolute;
+			z-index: 20;
+			top: 200px;
+			left: 0px;
+		}
+		.div1 p{
+			color: white;
+			text-align: center;
+			font-size: 50px;
+			line-height: 100px;
+		}
+	</style>
+</head>
+<body>
+	<div class="div1">
+		<a href=""><img src="./imgs/1.jpg"></a>
+		<div class="picp">
+			<p>前端</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$('.div1').mouseenter(function(){
+		$('.picp').stop();
+		$('.picp').animate({top:'0px'},"slow");
+	});
+	$('.div1').mouseleave(function(){
+		$('.picp').stop();
+		$('.picp').animate({top:'200px'},"slow");
+	})
+</script>
+</html>
