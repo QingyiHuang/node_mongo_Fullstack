@@ -4,6 +4,7 @@ var Passage = require('../app/controllers/passage.js')
 var Comment = require('../app/controllers/comment.js')
 var Category = require('../app/controllers/category.js')
 var AboutUs = require('../app/controllers/aboutus.js')
+var NoFound = require('../app/controllers/NoFound.js')
 
 module.exports = function(app){
 	//登录信息处理
@@ -44,8 +45,14 @@ module.exports = function(app){
 	app.get('/admin/category/list', User.signinRequired, User.adminRequired, Category.list)
 
 	//分类详情路由
-	app.get('/results',Index.search)
+	app.get('/results',Index.results)
+
+	//查询路由
+	app.get('/search',Index.search)
 
 	//aboutUs请求
 	app.get('/aboutUs',AboutUs.aboutus)
+
+	//404请求
+	app.get('*',NoFound.noFound)
 }
