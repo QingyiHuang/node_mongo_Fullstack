@@ -30,10 +30,27 @@
 	font-size: 44px;
 	padding-left:10px;
 }
-
+.div1{
+	overflow:hidden;
+}
 .div1 img{
 	transition: all 0.5s;
 }
 .div1:hover img{
-	transform: scale(1.2);
+	transform: scale(1.06);
 }
+
+	/*添加的部分*/
+	.item {
+		position: relative;
+	}
+	.carousel-word{
+		position: absolute;
+		z-index: 50px;
+		top: 100px;
+		left:200px;
+	}
+	.carousel-word h1{
+		color: white;
+	}
+
