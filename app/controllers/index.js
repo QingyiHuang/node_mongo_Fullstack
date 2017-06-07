@@ -62,3 +62,9 @@ exports.search = function(req,res){
         })
       })
 }
+
+exports.notfound = function(req,res){
+	res.render('404',{
+		title:'No Found'
+	})
+}

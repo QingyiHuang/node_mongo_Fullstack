@@ -7,7 +7,7 @@ block content
         if passage._id
           input(type="hidden", name="passage[_id]", value=passage._id)
         .form-group
-          label.col-sm-2.control-label(for="inputCategory") 电影分类(如下面没有该分类，您可以自己增加)
+          label.col-sm-2.control-label(for="inputCategory") 分类(如下面没有该分类，您可以自己增加)
           .col-sm-10
             input#inputCategory.form-control(type="text", name="passage[categoryName]", value=passage.categoryName)
         .form-group
